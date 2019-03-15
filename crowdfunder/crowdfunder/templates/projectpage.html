@@ -3,12 +3,12 @@
     <ul>
     {% for projects in project%}
         <li>
-           || {{ projects.title }}
-           || {{ projects.owner }}
-           || {{ projects.description }}
-           || funding goal = ${{ projects.funding_goal }}
-           || created on = {{ projects.created_at }}
-           || ends on = {{ projects.end_at }}
+           <h1>{{ projects.title }}</h1>
+           <h1>{{ projects.owner }}</h1>
+           <h1>{{ projects.description }}</h1>
+           <h1>funding goal = ${{ projects.funding_goal }}</h1>
+           <h2>created on = {{ projects.created_at }}</h2>
+           <h2>ends on = {{ projects.end_at }}</h2>
         </li>
     {% endfor %}
     </ul>
