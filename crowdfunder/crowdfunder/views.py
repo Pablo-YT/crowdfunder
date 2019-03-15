@@ -14,3 +14,26 @@ def project_view(request):
     }
     response = render(request, 'projectpage.html', context)
     return HttpResponse(response)
+
+def project_create(request):
+    if request.method == 'POST':
+        form = ProjectForm(request.POST)
+        if form.is_valid():
+            new_project = form.instance
+            new_project.save()
+            return HttpResponseRedirect('/projects/')
+    else:
+        form = ProjectForm()
+    html_response = render(request, 'projectcreate.html', {'form': form})
+    return HttpResponse(html_response)
+
+def project_show(request, id):
+    project = Project.objects.get(pk=id)
+    reward = project.rewards.all()
+    context = {
+        'project': project,
+        'reward': reward,
+    }
+    response = render(request, 'projectshow.html', context)
+    return HttpResponse(response)
+

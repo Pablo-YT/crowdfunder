@@ -3,12 +3,9 @@
     <ul>
     {% for projects in project%}
         <li>
-           <h1>{{ projects.title }}</h1>
+           <h1><a href="{% url 'project_show' id=projects.pk %}">{{ projects.title }}</a></h1>
            <h1>{{ projects.owner }}</h1>
            <h1>{{ projects.description }}</h1>
-           <h1>funding goal = ${{ projects.funding_goal }}</h1>
-           <h2>created on = {{ projects.created_at }}</h2>
-           <h2>ends on = {{ projects.end_at }}</h2>
         </li>
     {% endfor %}
     </ul>

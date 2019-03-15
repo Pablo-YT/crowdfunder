@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<ul>
+    <li>
+        <h1>{{ project.title }}</h1>
+        <h1>{{ project.owner }}</h1>
+        <h1>{{ project.description }}</h1>
+        <h1>funding goal = ${{ project.funding_goal }}</h1>
+        <h2>created on = {{ project.created_at }}</h2>
+        <h2>ends on = {{ project.end_at }}</h2>
+    </li>
+</ul>
+{% for rewards in reward %}
+    <li>{{ rewards.reward }}</li>
+    <li>{{ rewards.level }}</li>
+{% endfor %}
+{% endblock%}
