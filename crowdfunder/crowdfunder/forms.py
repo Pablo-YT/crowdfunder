@@ -15,7 +15,7 @@ class ProjectForm(ModelForm):
         fields = [
             'title',
             'owner',
-            'desciption',
+            'description',
             'funding_goal',
             'created_at',
             'end_at'

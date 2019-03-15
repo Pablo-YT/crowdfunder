@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <ul>
+    {% for projects in project%}
+        <li>
+           || {{ projects.title }}
+           || {{ projects.owner }}
+           || {{ projects.description }}
+           || funding goal = ${{ projects.funding_goal }}
+           || created on = {{ projects.created_at }}
+           || ends on = {{ projects.end_at }}
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock%}
