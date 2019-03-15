@@ -6,12 +6,13 @@ class Project(models.Model):
     owner = models.CharField(max_length=255)
     description = models.TextField(max_length=255)
     funding_goal = models.IntegerField()
-    created_at = models.DateTimeField(default=datetime.now())
+    created_at = models.DateTimeField() #now
     end_at = models.DateTimeField()
 
-class Rewards(models.Model):
+class Reward(models.Model):
     reward = models.CharField(max_length=255)
     description = models.TextField(max_length=255)
     level = models.IntegerField()
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='rewards')
 
     
