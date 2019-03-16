@@ -10,15 +10,15 @@
         <h2>ends on = {{ project.end_at }}</h2>
     </li>
 </ul>
-<a href="{% url 'project_rewards' id=project.pk%}">Add reward</a>
 {% for rewards in reward %}
     <li>{{ rewards.reward }}</li>
     <li>{{ rewards.description }}</li>
     <li>{{ rewards.level }}</li>
 {% endfor %}
 
-<form action="{% url 'project_show' id=project.pk %}">
+<form action="{% url 'project_show' id=project.pk %}" method="post">
     {% csrf_token %}
     {{ rewards_form.as_p }}
+    <input type="submit" name="Add" id="">
 </form>
 {% endblock%}

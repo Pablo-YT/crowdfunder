@@ -30,29 +30,40 @@ def project_create(request):
 def project_show(request, id):
     project = Project.objects.get(pk=id)
     reward = project.rewards.all()
-    context = {
-        'project': project,
-        'reward': reward,
-    }
-    response = render(request, 'projectshow.html', context)
-    return HttpResponse(response)
-
-def project_rewards(request, id):
-    project = Project.objects.get(pk=id)
     if request.method == 'POST':
         rewards_form = RewardsForm(request.POST)
         if rewards_form.is_valid():
             new_reward = rewards_form.save()
-            new_reward.save()
             return HttpResponseRedirect('/projects/{}'.format(id))
         else:
-            # need errors prob
+            # put some errors
             pass
     else:
         rewards_form = RewardsForm(initial={'project': id})
     context = {
-        'rewards_form': rewards_form,
-        'project': project
+        'project': project,
+        'reward': reward,
+        'rewards_form': rewards_form
     }
-    response = render(request, 'placeholder.html', context)
+    response = render(request, 'projectshow.html', context)
     return HttpResponse(response)
+
+# def project_rewards(request, id):
+#     project = Project.objects.get(pk=id)
+#     if request.method == 'POST':
+#         rewards_form = RewardsForm(request.POST)
+#         if rewards_form.is_valid():
+#             new_reward = rewards_form.save()
+#             new_reward.save()
+#             return HttpResponseRedirect('/projects/{}'.format(id))
+#         else:
+#             # need errors prob
+#             pass
+#     else:
+#         rewards_form = RewardsForm(initial={'project': id})
+#     context = {
+#         'rewards_form': rewards_form,
+#         'project': project
+#     }
+#     response = render(request, 'placeholder.html', context)
+#     return HttpResponse(response)
