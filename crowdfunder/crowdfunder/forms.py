@@ -25,8 +25,10 @@ class RewardsForm(ModelForm):
     
     class Meta:
         model = Reward
+        widgets = {'project': forms.HiddenInput()}
         fields = [
             'reward',
             'description',
-            'level'
+            'level',
+            'project'
         ]

@@ -7,6 +7,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
+        <header>
+           <a href="{% url 'project_view' %}"><h1>CrowdFunder</h1></a>
+        </header>
         <a href="{% url 'project_create'%}">Create New Project</a>
         {% block content %}
         {% endblock %}
