@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .models import Project, Reward
-from .forms import RewardsForm, ProjectForm
+from .forms import RewardsForm, ProjectForm, LoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -67,3 +67,27 @@ def project_show(request, id):
 #     }
 #     response = render(request, 'placeholder.html', context)
 #     return HttpResponse(response)
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            pw = form.cleaned_data['password']
+            user = authenticate(username=username, password=pw)
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect('/projects/')
+            else:
+                form.add_error('username', 'Login Failed')
+    else:
+        form = LoginForm()
+    context = {
+        'form': form
+    }
+    response = render(request, 'login.html', context)
+    return HttpResponse(response)
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/projects/')

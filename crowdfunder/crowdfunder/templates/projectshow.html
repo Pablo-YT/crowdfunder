@@ -5,7 +5,7 @@
         <h1>{{ project.title }}</h1>
         <h1>{{ project.owner }}</h1>
         <h1>{{ project.description }}</h1>
-        <h1>funding goal = ${{ project.funding_goal }}</h1>
+        <h1>funding goal = {{ project.dollars }}</h1>
         <h2>created on = {{ project.created_at }}</h2>
         <h2>ends on = {{ project.end_at }}</h2>
     </li>
@@ -15,10 +15,14 @@
     <li>{{ rewards.description }}</li>
     <li>{{ rewards.level }}</li>
 {% endfor %}
+{% if request.user.is_authenticated %}
+    <form action="{% url 'project_show' id=project.pk %}" method="post">
+        {% csrf_token %}
+        {{ rewards_form.as_p }}
+        <input type="submit" name="Add" id="">
+    </form>
+{% else %}
+    <h1>Back?</h1>
+{% endif %}
 
-<form action="{% url 'project_show' id=project.pk %}" method="post">
-    {% csrf_token %}
-    {{ rewards_form.as_p }}
-    <input type="submit" name="Add" id="">
-</form>
 {% endblock%}

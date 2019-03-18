@@ -3,15 +3,16 @@ from django import forms
 from .models import Reward, Project
 
 
-# class LoginForm(forms.Form):
-#     username = CharField(label='User Name', max_length=64)
-#     password = CharField(widget=PasswordInput())
+class LoginForm(forms.Form):
+    username = CharField(label='User Name', max_length=64)
+    password = CharField(widget=PasswordInput())
 
 
 class ProjectForm(ModelForm):
 
     class Meta:
         model = Project
+        widget = {'end_at': forms.SelectDateWidget()}
         fields = [
             'title',
             'owner',
