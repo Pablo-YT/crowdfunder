@@ -106,3 +106,6 @@ def catagorie_search(request):
     }
     response = render(request, 'search.html', context)
     return HttpResponse(response)
+
+def backer_view(request):
+    return HttpResponse(request, 'backer.html')
