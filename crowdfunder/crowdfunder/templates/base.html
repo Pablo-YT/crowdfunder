@@ -12,15 +12,12 @@
     <body>
         <header>
           <a href="{% url 'project_view' %}"><h1>CrowdFunder</h1></a>
-         <nav>
-           {% if request.user.is_authenticated %}
-           <h3><p><a href="{% url 'logout' %}">Log Out</a></p></h3>
-
-           {% else %}
-           <p><a href="{% url 'login' %}">Log In</a></p>
-
-           {% endif %}
-         </nav>   
+            <form class="search" action="{% url 'catagorie_search' %}" method="get">
+                <label for="project-search">
+                    <span>Search:</span>
+                    <input type="search" id="project-search" name="query" value="{{ query }}">
+                </label>
+            </form>
         </header>
         <div class="login_out">
             {% if request.user.is_authenticated %}

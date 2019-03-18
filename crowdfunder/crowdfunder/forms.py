@@ -19,7 +19,8 @@ class ProjectForm(ModelForm):
             'description',
             'funding_goal',
             'created_at',
-            'end_at'
+            'end_at',
+            'catagories'
         ]
 
 class RewardsForm(ModelForm):

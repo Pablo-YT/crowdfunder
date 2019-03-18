@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="search-count">
+    <h1>Search Results: <span class="search-count">{{ search_result.count }}</span></h1>
+</div>
+<div class="main-layout">
+    {% for project in search_result %}
+        <h1><a href="{% url 'project_show' id=project.pk %}">{{ project.title }}</a></h1>
+        <h1>{{ project.name }}</h1>
+        <h1>{{ project.description }}</h1>
+        <h4>added by {{ project.user }}</h4>
+    {% endfor %}
+</div>
+{% endblock %}

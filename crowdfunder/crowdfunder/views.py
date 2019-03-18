@@ -95,3 +95,14 @@ def signup(request):
         form = UserCreationForm()
     html_response = render(request, 'signup.html', {'form': form})
     return HttpResponse(html_response)
+
+
+def catagorie_search(request):
+    query = request.GET['query']
+    search_result = Project.objects.filter(catagories=query)
+    context = {
+        'search_result': search_result,
+        'query': query
+    }
+    response = render(request, 'search.html', context)
+    return HttpResponse(response)

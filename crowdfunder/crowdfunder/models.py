@@ -10,6 +10,7 @@ class Project(models.Model):
     created_at = models.DateTimeField(default=datetime.now, blank=True)
     end_at = models.DateTimeField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='projects', default=1)
+    catagories = models.CharField(max_length=255, default='place')
 
 
     def dollars(self):
