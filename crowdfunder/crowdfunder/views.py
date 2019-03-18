@@ -3,9 +3,15 @@ from django.shortcuts import render
 from .models import Project, Reward
 from .forms import RewardsForm, ProjectForm, LoginForm
 from django.contrib.auth import authenticate, login, logout
+from crowdfunder.forms import LoginForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
+
+
+def root(request):
+    return HttpResponseRedirect('/projects')
+
 
 def project_view(request):
     project = Project.objects.all()

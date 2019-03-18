@@ -1,5 +1,5 @@
-from django.forms import CharField, PasswordInput, ModelForm
 from django import forms
+from django.forms import CharField, PasswordInput, ModelForm ,Form
 from .models import Reward, Project
 
 
@@ -23,7 +23,7 @@ class ProjectForm(ModelForm):
         ]
 
 class RewardsForm(ModelForm):
-    
+
     class Meta:
         model = Reward
         widgets = {'project': forms.HiddenInput()}
@@ -33,3 +33,4 @@ class RewardsForm(ModelForm):
             'level',
             'project'
         ]
+
