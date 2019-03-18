@@ -15,6 +15,7 @@ class Project(models.Model):
     def dollars(self):
         dollars = self.funding_goal
         return "${:.2f}".format(dollars)
+    
 
 class Reward(models.Model):
     reward = models.CharField(max_length=255)

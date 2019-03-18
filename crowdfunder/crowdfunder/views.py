@@ -26,6 +26,7 @@ def project_create(request):
         form = ProjectForm(request.POST)
         if form.is_valid():
             new_project = form.instance
+            new_project.user = request.user
             new_project.save()
             return HttpResponseRedirect('/projects/')
     else:
@@ -54,25 +55,6 @@ def project_show(request, id):
     response = render(request, 'projectshow.html', context)
     return HttpResponse(response)
 
-# def project_rewards(request, id):
-#     project = Project.objects.get(pk=id)
-#     if request.method == 'POST':
-#         rewards_form = RewardsForm(request.POST)
-#         if rewards_form.is_valid():
-#             new_reward = rewards_form.save()
-#             new_reward.save()
-#             return HttpResponseRedirect('/projects/{}'.format(id))
-#         else:
-#             # need errors prob
-#             pass
-#     else:
-#         rewards_form = RewardsForm(initial={'project': id})
-#     context = {
-#         'rewards_form': rewards_form,
-#         'project': project
-#     }
-#     response = render(request, 'placeholder.html', context)
-#     return HttpResponse(response)
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -97,3 +79,19 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/projects/')
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return HttpResponseRedirect('/projects/')
+    else:
+        form = UserCreationForm()
+    html_response = render(request, 'signup.html', {'form': form})
+    return HttpResponse(html_response)
