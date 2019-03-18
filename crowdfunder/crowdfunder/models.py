@@ -14,7 +14,11 @@ class Project(models.Model):
     catagories = models.CharField(max_length=255, default='place')
     
     def current_funds(self):
-       return self.backers.aggregate(Sum('amount_given'))['amount_given__sum']
+        amount = self.backers.aggregate(Sum('amount_given'))['amount_given__sum']
+        if amount == None:
+            amount = 0
+        return "${:.2f}".format(amount)
+    
 
     def dollars(self):
         dollars = self.funding_goal

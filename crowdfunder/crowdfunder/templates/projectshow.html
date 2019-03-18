@@ -23,6 +23,7 @@
         {{ rewards_form.as_p }}
         <input type="submit" name="Add" id="">
     </form>
+    <h1>Can't back own project</h1>
 {% else %}
     <form action="{% url 'project_show' id=project.pk %}" method="post">
         {% csrf_token %}
