@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from .models import Project, Reward
+from .models import Project, Reward, Backer
 from .forms import RewardsForm, ProjectForm, LoginForm, BackersForm
 from django.contrib.auth import authenticate, login, logout
 from crowdfunder.forms import LoginForm
@@ -37,6 +37,7 @@ def project_create(request):
 def project_show(request, id):
     project = Project.objects.get(pk=id)
     reward = project.rewards.all()
+    backer = project.backers.all()
     if request.method == 'POST':
         rewards_form = RewardsForm(request.POST)
         if rewards_form.is_valid():
@@ -59,9 +60,10 @@ def project_show(request, id):
         backer_form = BackersForm(initial={'project': id, 'user': request.user})
     context = {
         'project': project,
+        'backer': backer,
         'reward': reward,
         'rewards_form': rewards_form,
-        'backer_form': backer_form
+        'backer_form': backer_form,
     }
     response = render(request, 'projectshow.html', context)
     return HttpResponse(response)
