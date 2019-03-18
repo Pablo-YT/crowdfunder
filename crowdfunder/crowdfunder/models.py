@@ -29,5 +29,5 @@ class Reward(models.Model):
 
 class Backer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='backer', default=1)
-    amount_given = models.IntegerField(default=0)
+    amount_given = models.IntegerField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='backers')

@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import CharField, PasswordInput, ModelForm ,Form
-from .models import Reward, Project
+from .models import Reward, Project, Backer
 
 
 class LoginForm(forms.Form):
@@ -32,6 +32,18 @@ class RewardsForm(ModelForm):
             'reward',
             'description',
             'level',
+            'project'
+        ]
+
+
+class BackersForm(ModelForm):
+
+    class Meta:
+        model = Backer
+        widgets = {'project': forms.HiddenInput(), 'user': forms.HiddenInput()}
+        fields = [
+            'user',
+            'amount_given',
             'project'
         ]
 

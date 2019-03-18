@@ -24,7 +24,11 @@
         <input type="submit" name="Add" id="">
     </form>
 {% else %}
-    <h1>Back?</h1>
+    <form action="{% url 'project_show' id=project.pk %}" method="post">
+        {% csrf_token %}
+        {{ backer_form.as_p }}
+        <input type="submit" name="Add" id="">
+    </form>
 {% endif %}
 
 {% endblock%}
