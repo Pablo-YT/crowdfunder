@@ -39,26 +39,23 @@ def project_show(request, id):
     project = Project.objects.get(pk=id)
     reward = project.rewards.all()
     backer = project.backers.all()
+    
     if request.method == 'POST':
         rewards_form = RewardsForm(request.POST)
+        backer_form = BackersForm(request.POST)
         if rewards_form.is_valid():
             new_reward = rewards_form.save()
-            return HttpResponseRedirect('/projects/{}'.format(id))
-        else:
-            # put some errors
-            pass
-    else:
-        rewards_form = RewardsForm(initial={'project': id})
-    if request.method == 'POST': #comnbine the if statments
-        backer_form = BackersForm(request.POST)
-        if backer_form.is_valid():
+        elif backer_form.is_valid():
             new_backer = backer_form.save()
             return HttpResponseRedirect('/projects/{}'.format(id))
         else:
             # put some errors
             pass
     else:
+        rewards_form = RewardsForm(initial={'project': id})
         backer_form = BackersForm(initial={'project': id, 'user': request.user})
+        
+    
     context = {
         'project': project,
         'backer': backer,
