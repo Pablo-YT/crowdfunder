@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import root, project_view, project_create, project_show, login_view, logout_view, signup, catagorie_search, category, profile_show, category_view
+from .views import root, project_view, project_create, project_show, login_view, logout_view, signup, catagorie_search, category, profile_show, category_view, delete_project
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -24,6 +24,7 @@ urlpatterns = [
     path('projects/', project_view, name='project_view'),
     path('projects/create', project_create, name='project_create'),
     path('projects/<int:id>', project_show, name='project_show'),
+    path('projects/<int:id>/delete', delete_project, name='delete_project'),
     path('profile/<int:id>', profile_show, name='profile_show'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),

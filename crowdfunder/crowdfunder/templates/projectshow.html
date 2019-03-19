@@ -11,7 +11,9 @@
         <h1>made by {{ project.user }}</h1>
         <h1>current funds = {{ project.current_funds }}</h1>
     </li>
+    <a href="{% url 'delete_project' id=project.pk %}">Delete</a>
 </ul>
+
 {% for rewards in reward %}
     <li>{{ rewards.reward }}</li>
     <li>{{ rewards.description }}</li>

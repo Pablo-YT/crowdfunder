@@ -139,3 +139,8 @@ def category_view(request):
     categories = Category.objects.all()
     response = render(request, 'category_view.html', {'categories': categories})
     return HttpResponse(response)
+
+def delete_project(request, id):
+    project = get_object_or_404(Project, pk=id, user=request.user.pk)
+    project.delete()
+    return HttpResponseRedirect('/projects/')
