@@ -44,6 +44,7 @@ class Reward(models.Model):
     level = models.IntegerField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='rewards')
 
+
 class Backer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='backer', default=1)
     amount_given = models.IntegerField(validators=[min_value])

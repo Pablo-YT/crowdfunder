@@ -1,7 +1,9 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from .models import Project, Reward, Backer
+
+from .models import Project, Reward, User, Backer
 from .forms import RewardsForm, ProjectForm, LoginForm, BackersForm
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -118,3 +120,12 @@ def catagorie_search(request):
     }
     response = render(request, 'search.html', context)
     return HttpResponse(response)
+
+def profile_show(request, id):
+    return render(request, 'profile.html', {
+        'user': User.objects.get(pk=id)
+    })
+
+
+def profile(request):
+    return render(request, 'users/profile.html')
