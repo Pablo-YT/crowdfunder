@@ -46,4 +46,3 @@ class BackersForm(ModelForm):
             'amount_given',
             'project'
         ]
-

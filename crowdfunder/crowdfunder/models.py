@@ -12,18 +12,18 @@ class Project(models.Model):
     end_at = models.DateTimeField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='projects', default=1)
     catagories = models.CharField(max_length=255, default='place')
-    
+
     def current_funds(self):
         amount = self.backers.aggregate(Sum('amount_given'))['amount_given__sum']
         if amount == None:
             amount = 0
         return "${:.2f}".format(amount)
-    
+
 
     def dollars(self):
         dollars = self.funding_goal
         return "${:.2f}".format(dollars)
-    
+
 
 class Reward(models.Model):
     reward = models.CharField(max_length=255)
