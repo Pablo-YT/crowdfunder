@@ -43,6 +43,7 @@ class Backer(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='backers')
 
 class Category(models.Model):
+    name = models.Model
     amount_raised = models.ForeignKey(Backer, on_delete=models.CASCADE, related_name='raised')
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='category')
 
