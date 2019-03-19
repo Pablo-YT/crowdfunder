@@ -1,7 +1,9 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from .models import Project, Reward, Backer
+
+from .models import Project, Reward, User, Backer
 from .forms import RewardsForm, ProjectForm, LoginForm, BackersForm
+
 from django.contrib.auth import authenticate, login, logout
 from crowdfunder.forms import LoginForm
 from django.contrib.auth.forms import UserCreationForm
@@ -47,8 +49,8 @@ def project_show(request, id):
             # put some errors
             pass
     else:
-        rewards_form = RewardsForm(initial={'project': id})    
-    if request.method == 'POST': #comnbine the if statments 
+        rewards_form = RewardsForm(initial={'project': id})
+    if request.method == 'POST': #comnbine the if statments
         backer_form = BackersForm(request.POST)
         if backer_form.is_valid():
             new_backer = backer_form.save()
@@ -112,7 +114,7 @@ def signup(request):
 
 def catagorie_search(request):
     query = request.GET['query']
-    search_result = Project.objects.filter(catagories=query)
+    search_result = Project.objects.filter(catagories__icontains=query)
     context = {
         'search_result': search_result,
         'query': query
@@ -120,8 +122,17 @@ def catagorie_search(request):
     response = render(request, 'search.html', context)
     return HttpResponse(response)
 
+def profile_show(request, id):
+    return render(request, 'profile.html', {
+        'user': User.objects.get(pk=id)
+    })
+
 
 def categories(request):
     
     response = render(request, 'category.html')
     return HttpResponse(response)
+
+    
+def profile(request):
+    return render(request, 'users/profile.html')
