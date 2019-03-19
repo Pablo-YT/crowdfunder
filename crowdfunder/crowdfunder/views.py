@@ -1,12 +1,9 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-<<<<<<< HEAD
-from .models import Project, Reward, User
-from .forms import RewardsForm, ProjectForm, LoginForm
-=======
-from .models import Project, Reward, Backer
+
+from .models import Project, Reward, User, Backer
 from .forms import RewardsForm, ProjectForm, LoginForm, BackersForm
->>>>>>> f11d69f6b3ed82ccf30c7c88fc872f7f0be9c1d7
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -51,8 +48,8 @@ def project_show(request, id):
             # put some errors
             pass
     else:
-        rewards_form = RewardsForm(initial={'project': id})    
-    if request.method == 'POST': #comnbine the if statments 
+        rewards_form = RewardsForm(initial={'project': id})
+    if request.method == 'POST': #comnbine the if statments
         backer_form = BackersForm(request.POST)
         if backer_form.is_valid():
             new_backer = backer_form.save()
@@ -116,7 +113,7 @@ def signup(request):
 
 def catagorie_search(request):
     query = request.GET['query']
-    search_result = Project.objects.filter(catagories=query)
+    search_result = Project.objects.filter(catagories__icontains=query)
     context = {
         'search_result': search_result,
         'query': query
@@ -124,7 +121,6 @@ def catagorie_search(request):
     response = render(request, 'search.html', context)
     return HttpResponse(response)
 
-<<<<<<< HEAD
 def profile_show(request, id):
     return render(request, 'profile.html', {
         'user': User.objects.get(pk=id)
@@ -133,6 +129,3 @@ def profile_show(request, id):
 
 def profile(request):
     return render(request, 'users/profile.html')
-=======
-
->>>>>>> f11d69f6b3ed82ccf30c7c88fc872f7f0be9c1d7
