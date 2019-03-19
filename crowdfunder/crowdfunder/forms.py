@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import CharField, PasswordInput, ModelForm ,Form
+from django.forms import CharField, PasswordInput, ModelForm ,Form, ModelChoiceField
 from .models import Reward, Project, Backer
 
 
@@ -12,7 +12,10 @@ class ProjectForm(ModelForm):
 
     class Meta:
         model = Project
-        widget = {'end_at': forms.SelectDateWidget()}
+        widget = {
+            'end_at': forms.SelectDateWidget(),
+            'catagories': forms.ChoiceField()
+        }
         fields = [
             'title',
             'owner',
@@ -22,6 +25,8 @@ class ProjectForm(ModelForm):
             'end_at',
             'catagories'
         ]
+
+
 
 class RewardsForm(ModelForm):
 

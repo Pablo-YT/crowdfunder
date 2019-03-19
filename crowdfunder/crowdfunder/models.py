@@ -3,7 +3,16 @@ from datetime import datetime, date
 from django.contrib.auth.models import User
 from django.db.models import Sum
 
+
 class Project(models.Model):
+    CATAGORIES = [
+        ('arts', 'Arts'),
+        ('film', 'Film'),
+        ('games', 'Games'),
+        ('music', 'Music'),
+        ('publishing', 'Publishing'),
+    ]
+    #('Arts', 'Film', 'Games', 'Music', 'Publishing')
     title = models.CharField(max_length=255)
     owner = models.CharField(max_length=255)
     description = models.TextField(max_length=255)
@@ -11,7 +20,8 @@ class Project(models.Model):
     created_at = models.DateTimeField(default=datetime.now, blank=True)
     end_at = models.DateTimeField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='projects', default=1)
-    catagories = models.CharField(max_length=255, default='place')
+    catagories = models.CharField(max_length=255, choices=CATAGORIES, default='place')
+
 
     def current_funds(self):
         amount = self.backers.aggregate(Sum('amount_given'))['amount_given__sum']

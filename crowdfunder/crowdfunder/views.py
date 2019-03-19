@@ -46,8 +46,8 @@ def project_show(request, id):
             # put some errors
             pass
     else:
-        rewards_form = RewardsForm(initial={'project': id})    
-    if request.method == 'POST': #comnbine the if statments 
+        rewards_form = RewardsForm(initial={'project': id})
+    if request.method == 'POST': #comnbine the if statments
         backer_form = BackersForm(request.POST)
         if backer_form.is_valid():
             new_backer = backer_form.save()
@@ -110,11 +110,10 @@ def signup(request):
 
 def catagorie_search(request):
     query = request.GET['query']
-    search_result = Project.objects.filter(catagories=query)
+    search_result = Project.objects.filter(catagories__icontains=query)     
     context = {
         'search_result': search_result,
         'query': query
     }
     response = render(request, 'search.html', context)
     return HttpResponse(response)
-
