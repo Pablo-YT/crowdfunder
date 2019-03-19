@@ -1,10 +1,10 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
-from .models import Project, Reward, User, Backer
+from .models import Project, Reward, User, Backer, Category
 from .forms import RewardsForm, ProjectForm, LoginForm, BackersForm
-
 from django.contrib.auth import authenticate, login, logout
+from crowdfunder.forms import LoginForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
@@ -31,7 +31,7 @@ def project_create(request):
             new_project.save()
             return HttpResponseRedirect('/projects/')
     else:
-        form = ProjectForm(initial={'owner': request.user})
+        form = ProjectForm()
     html_response = render(request, 'projectcreate.html', {'form': form})
     return HttpResponse(html_response)
 
@@ -122,6 +122,13 @@ def profile_show(request, id):
     return render(request, 'profile.html', {
         'user': User.objects.get(pk=id)
     })
+
+
+def categories(request):
+    category = Category.objects.all()
+    context = {'category': category}
+    response = render(request, 'category.html', context)
+    return HttpResponse(response)
 
 
 def profile(request):
