@@ -10,7 +10,7 @@ class Project(models.Model):
     title = models.CharField(max_length=255)
     owner = models.CharField(max_length=255)
     description = models.TextField(max_length=255)
-    funding_goal = models.IntegerField()
+    funding_goal = models.IntegerField(validators=[min_value])
     created_at = models.DateTimeField(default=datetime.now, blank=True)
     end_at = models.DateTimeField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='projects', default=1)
