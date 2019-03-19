@@ -13,11 +13,13 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-    def amount_rasied(self):
-        raised = self.categories.aggregate(Sum('current_funds'))['current_funds__sum']
-        if raised == None:
-            raised = 0
-        return "${:.2f}".format(raised)
+    def amount_raised(self):
+        total = 0
+        for project in self.projects.all():
+            total += project.current_funds_num()
+            return "${:.2f}".format(total)
+
+   
 
 
 class Project(models.Model):
@@ -38,8 +40,22 @@ class Project(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='projects', default=1)
     catagories = models.ForeignKey(Category,on_delete=models.CASCADE, related_name='projects', default=1)
 
+    def current_funds_num(self):
+        amount = self.backers.aggregate(Sum('amount_given'))[
+            'amount_given__sum']
+        if amount == None:
+            amount = 0
+        return amount
 
+    def current_funds(self):
+        return "${:.2f}".format(self.current_funds_num())
 
+    def dollars(self):
+        dollars = self.funding_goal
+        return "${:.2f}".format(dollars)
+    
+    def __str__(self):
+        return self.title 
 
 
 
@@ -49,21 +65,6 @@ class Backer(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='backers')
 
 
-
-
-    def current_funds(self):
-        amount = self.backers.aggregate(Sum('amount_given'))['amount_given__sum']
-        if amount == None:
-            amount = 0
-        return "${:.2f}".format(amount)
-
-
-    def dollars(self):
-        dollars = self.funding_goal
-        return "${:.2f}".format(dollars)
-    
-    def __str__(self):
-        return self.title 
 
 
 

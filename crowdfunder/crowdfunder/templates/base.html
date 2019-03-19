@@ -24,11 +24,11 @@
                 <a href="{% url 'project_create'%}">Create New Project</a>
                 <a href="{% url 'profile_show' id=request.user.pk %}">{{ request.user.first_name }}</a>
                 <a href="{% url 'logout' %}">Logout</a>
-                <a href="{% url 'categories' %}">Categories</a>
             {% else %}
                 <a href="{% url 'login' %}">Login</a>
                 <a href="{% url 'signup' %}">Signup</a>       
             {% endif %}
+            <a href="{% url 'category_view' %}">Categories</a>
         </div>
         {% block content %}
         {% endblock %}

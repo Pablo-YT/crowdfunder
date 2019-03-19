@@ -31,7 +31,7 @@ def project_create(request):
             new_project.save()
             return HttpResponseRedirect('/projects/')
     else:
-        form = ProjectForm()
+        form = ProjectForm(initial={'owner': request.user})
     html_response = render(request, 'projectcreate.html', {'form': form})
     return HttpResponse(html_response)
 
@@ -123,13 +123,19 @@ def profile_show(request, id):
         'user': User.objects.get(pk=id)
     })
 
-
-def categories(request):
-    category = Category.objects.all()
-    context = {'category': category}
-    response = render(request, 'category.html', context)
-    return HttpResponse(response)
-
-
 def profile(request):
     return render(request, 'users/profile.html')
+
+def category(request, id):
+    category = Category.objects.get(pk=id)
+    projects = category.projects.all()
+    context = {
+        'category': category,
+        'projects': projects
+        }
+    return render(request, 'category.html', context)
+
+def category_view(request):
+    categories = Category.objects.all()
+    response = render(request, 'category_view.html', {'categories': categories})
+    return HttpResponse(response)

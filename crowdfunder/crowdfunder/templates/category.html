@@ -1,15 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
 <ul>
-{% for categories in category %}
     <li>
-        <h1>{{ categories.name }}</h1>
+        <h1>{{ category.name}}</h1>
     </li>
-
-
-
-
-
-{% endfor %}
+    {% for project in projects%}
+        <li><a href="{% url 'project_show' id=project.pk %}">{{ project.title }}</a></li>
+    {% endfor %}
 </ul>
 {% endblock %}
