@@ -1,9 +1,13 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+<<<<<<< HEAD
 from .models import Project, Reward, User
 from .forms import RewardsForm, ProjectForm, LoginForm
+=======
+from .models import Project, Reward, Backer
+from .forms import RewardsForm, ProjectForm, LoginForm, BackersForm
+>>>>>>> f11d69f6b3ed82ccf30c7c88fc872f7f0be9c1d7
 from django.contrib.auth import authenticate, login, logout
-from crowdfunder.forms import LoginForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
@@ -30,13 +34,14 @@ def project_create(request):
             new_project.save()
             return HttpResponseRedirect('/projects/')
     else:
-        form = ProjectForm()
+        form = ProjectForm(initial={'owner': request.user})
     html_response = render(request, 'projectcreate.html', {'form': form})
     return HttpResponse(html_response)
 
 def project_show(request, id):
     project = Project.objects.get(pk=id)
     reward = project.rewards.all()
+    backer = project.backers.all()
     if request.method == 'POST':
         rewards_form = RewardsForm(request.POST)
         if rewards_form.is_valid():
@@ -46,11 +51,23 @@ def project_show(request, id):
             # put some errors
             pass
     else:
-        rewards_form = RewardsForm(initial={'project': id})
+        rewards_form = RewardsForm(initial={'project': id})    
+    if request.method == 'POST': #comnbine the if statments 
+        backer_form = BackersForm(request.POST)
+        if backer_form.is_valid():
+            new_backer = backer_form.save()
+            return HttpResponseRedirect('/projects/{}'.format(id))
+        else:
+            # put some errors
+            pass
+    else:
+        backer_form = BackersForm(initial={'project': id, 'user': request.user})
     context = {
         'project': project,
+        'backer': backer,
         'reward': reward,
-        'rewards_form': rewards_form
+        'rewards_form': rewards_form,
+        'backer_form': backer_form,
     }
     response = render(request, 'projectshow.html', context)
     return HttpResponse(response)
@@ -107,6 +124,7 @@ def catagorie_search(request):
     response = render(request, 'search.html', context)
     return HttpResponse(response)
 
+<<<<<<< HEAD
 def profile_show(request, id):
     return render(request, 'profile.html', {
         'user': User.objects.get(pk=id)
@@ -115,3 +133,6 @@ def profile_show(request, id):
 
 def profile(request):
     return render(request, 'users/profile.html')
+=======
+
+>>>>>>> f11d69f6b3ed82ccf30c7c88fc872f7f0be9c1d7

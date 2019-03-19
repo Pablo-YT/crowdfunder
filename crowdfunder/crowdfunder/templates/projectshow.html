@@ -9,6 +9,7 @@
         <h2>created on = {{ project.created_at }}</h2>
         <h2>ends on = {{ project.end_at }}</h2>
         <h1>made by {{ project.user }}</h1>
+        <h1>current funds = {{ project.current_funds }}</h1>
     </li>
 </ul>
 {% for rewards in reward %}
@@ -16,14 +17,25 @@
     <li>{{ rewards.description }}</li>
     <li>{{ rewards.level }}</li>
 {% endfor %}
-{% if request.user.is_authenticated %}
+<div class="backers">
+    <h1>Backers</h1>
+    {% for back in backer %}
+    <li>{{ back.user }} => ${{ back.amount_given }}</li>
+    {% endfor %}
+</div>
+{% if request.user == project.user %}
     <form action="{% url 'project_show' id=project.pk %}" method="post">
         {% csrf_token %}
         {{ rewards_form.as_p }}
         <input type="submit" name="Add" id="">
     </form>
+    <h1>Can't back own project</h1>
 {% else %}
-    <h1>Back?</h1>
+    <form action="{% url 'project_show' id=project.pk %}" method="post">
+        {% csrf_token %}
+        {{ backer_form.as_p }}
+        <input type="submit" name="Add" id="">
+    </form>
 {% endif %}
 
 {% endblock%}
