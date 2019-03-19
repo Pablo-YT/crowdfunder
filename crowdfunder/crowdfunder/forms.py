@@ -14,7 +14,8 @@ class ProjectForm(ModelForm):
         model = Project
         widget = {
             'end_at': forms.SelectDateWidget(),
-            'catagories': forms.ChoiceField()
+            'catagories': forms.ChoiceField(),
+            'owner': forms.HiddenInput()
         }
         fields = [
             'title',

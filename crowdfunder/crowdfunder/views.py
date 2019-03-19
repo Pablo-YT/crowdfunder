@@ -1,9 +1,8 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from .models import Project, Reward
+from .models import Project, Reward, Backer
 from .forms import RewardsForm, ProjectForm, LoginForm, BackersForm
 from django.contrib.auth import authenticate, login, logout
-from crowdfunder.forms import LoginForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
@@ -30,13 +29,14 @@ def project_create(request):
             new_project.save()
             return HttpResponseRedirect('/projects/')
     else:
-        form = ProjectForm()
+        form = ProjectForm(initial={'owner': request.user})
     html_response = render(request, 'projectcreate.html', {'form': form})
     return HttpResponse(html_response)
 
 def project_show(request, id):
     project = Project.objects.get(pk=id)
     reward = project.rewards.all()
+    backer = project.backers.all()
     if request.method == 'POST':
         rewards_form = RewardsForm(request.POST)
         if rewards_form.is_valid():
@@ -59,9 +59,10 @@ def project_show(request, id):
         backer_form = BackersForm(initial={'project': id, 'user': request.user})
     context = {
         'project': project,
+        'backer': backer,
         'reward': reward,
         'rewards_form': rewards_form,
-        'backer_form': backer_form
+        'backer_form': backer_form,
     }
     response = render(request, 'projectshow.html', context)
     return HttpResponse(response)
@@ -110,7 +111,7 @@ def signup(request):
 
 def catagorie_search(request):
     query = request.GET['query']
-    search_result = Project.objects.filter(catagories__icontains=query)     
+    search_result = Project.objects.filter(catagories__icontains=query)
     context = {
         'search_result': search_result,
         'query': query
