@@ -20,8 +20,9 @@
 <div class="backers">
     <h1>Backers</h1>
     {% for back in backer %}
-    <li>{{ back.user }} => ${{ back.amount_given }}</li>
+    <li><a href="{% url 'profile_show' id=back.user.id %}">{{ back.user }}</a> => ${{ back.amount_given }}</li>
     {% endfor %}
+   
 </div>
 {% if request.user == project.user %}
     <form action="{% url 'project_show' id=project.pk %}" method="post">
