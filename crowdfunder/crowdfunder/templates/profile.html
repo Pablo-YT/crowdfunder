@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Profile Page</h1>
+<h1>{{user.email}}</h1>
+<ul>
+{% for project in user.projects.all %}
+    <li>
+       <h1><a href="{% url 'project_show' id=project.pk %}">{{ project.title }}</a></h1>
+       <h1>{{ project.name }}</h1>
+       <h1>{{ project.description }}</h1>
+       <h4>added by {{ project.user }}</h4>
+    </li>
+{% endfor %}
+</ul>
+{% endblock%}

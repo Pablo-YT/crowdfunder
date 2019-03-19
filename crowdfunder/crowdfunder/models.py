@@ -16,12 +16,10 @@ class Project(models.Model):
     def dollars(self):
         dollars = self.funding_goal
         return "${:.2f}".format(dollars)
-    
+
 
 class Reward(models.Model):
     reward = models.CharField(max_length=255)
     description = models.TextField(max_length=255)
     level = models.IntegerField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='rewards')
-
-    
