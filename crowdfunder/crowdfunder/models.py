@@ -27,6 +27,9 @@ class Project(models.Model):
         dollars = self.funding_goal
         return "${:.2f}".format(dollars)
     
+    def __str__(self):
+        return self.title 
+
 
 class Reward(models.Model):
     reward = models.CharField(max_length=255)
@@ -38,3 +41,13 @@ class Backer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='backer', default=1)
     amount_given = models.IntegerField(validators=[min_value])
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='backers')
+
+class Category(models.Model):
+    amount_raised = models.ForeignKey(Backer, on_delete=models.CASCADE, related_name='raised')
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='category')
+
+    def amount_rasied(self):
+        raised = self.categories.aggregate(Sum('amount_given'))['amount_given__sum']
+        if amount == None:
+            amount = 0
+        return "${:.2f}".format(amount)

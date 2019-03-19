@@ -121,3 +121,7 @@ def catagorie_search(request):
     return HttpResponse(response)
 
 
+def categories(request):
+    
+    response = render(request, 'category.html')
+    return HttpResponse(response)
