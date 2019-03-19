@@ -12,7 +12,7 @@ class ProjectForm(ModelForm):
 
     class Meta:
         model = Project
-        widget = {'end_at': forms.SelectDateWidget()}
+        widgets = {'end_at': forms.SelectDateWidget(), 'owner': forms.HiddenInput()}
         fields = [
             'title',
             'owner',
