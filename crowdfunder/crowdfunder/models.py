@@ -2,6 +2,9 @@ from django.db import models
 from datetime import datetime, date
 from django.contrib.auth.models import User
 from django.db.models import Sum
+from django.core.validators import MinValueValidator, MaxValueValidator
+
+min_value = MinValueValidator(0,'Please Enter A Value Higher Than Zero.')
 
 class Project(models.Model):
     title = models.CharField(max_length=255)
@@ -33,5 +36,5 @@ class Reward(models.Model):
 
 class Backer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='backer', default=1)
-    amount_given = models.IntegerField()
+    amount_given = models.IntegerField(validators=[min_value])
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='backers')

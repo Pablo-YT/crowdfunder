@@ -118,3 +118,4 @@ def catagorie_search(request):
     response = render(request, 'search.html', context)
     return HttpResponse(response)
 
+
