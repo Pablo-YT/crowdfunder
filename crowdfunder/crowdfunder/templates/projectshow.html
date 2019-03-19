@@ -22,11 +22,7 @@
     {% for back in backer %}
     <li>{{ back.user }} => ${{ back.amount_given }}</li>
     {% endfor %}
-    {% for back in backer %}
-        {% if back.user == request.user %}
-            <h1>ALREADY backed</h1>
-        {% endif %}
-    {% endfor %}
+   
 </div>
 {% if request.user == project.user %}
     <form action="{% url 'project_show' id=project.pk %}" method="post">
@@ -41,6 +37,6 @@
         {{ backer_form.as_p }}
         <input type="submit" name="Add" id="">
     </form>
-{% endif %}grgege
+{% endif %}
 
 {% endblock%}
