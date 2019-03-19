@@ -6,6 +6,19 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 min_value = MinValueValidator(0,'Please Enter A Value Higher Than Zero.')
 
+   
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return self.name
+
+    def amount_rasied(self):
+        raised = self.categories.aggregate(Sum('current_funds'))['current_funds__sum']
+        if raised == None:
+            raised = 0
+        return "${:.2f}".format(raised)
+
 
 class Project(models.Model):
     CATAGORIES = [
@@ -23,7 +36,19 @@ class Project(models.Model):
     created_at = models.DateTimeField(default=datetime.now, blank=True)
     end_at = models.DateTimeField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='projects', default=1)
-    catagories = models.CharField(max_length=255, choices=CATAGORIES, default='place')
+    catagories = models.ForeignKey(Category,on_delete=models.CASCADE, related_name='projects', default=1)
+
+
+
+
+
+
+class Backer(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='backer', default=1)
+    amount_given = models.IntegerField(validators=[min_value])
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='backers')
+
+
 
 
     def current_funds(self):
@@ -47,20 +72,3 @@ class Reward(models.Model):
     description = models.TextField(max_length=255)
     level = models.IntegerField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='rewards')
-
-
-class Backer(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='backer', default=1)
-    amount_given = models.IntegerField(validators=[min_value])
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='backers')
-
-class Category(models.Model):
-    name = models.Model
-    amount_raised = models.ForeignKey(Backer, on_delete=models.CASCADE, related_name='raised')
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='category')
-
-    def amount_rasied(self):
-        raised = self.categories.aggregate(Sum('amount_given'))['amount_given__sum']
-        if amount == None:
-            amount = 0
-        return "${:.2f}".format(amount)

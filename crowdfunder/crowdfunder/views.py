@@ -1,9 +1,8 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
-from .models import Project, Reward, User, Backer
+from .models import Project, Reward, User, Backer, Category
 from .forms import RewardsForm, ProjectForm, LoginForm, BackersForm
-
 from django.contrib.auth import authenticate, login, logout
 from crowdfunder.forms import LoginForm
 from django.contrib.auth.forms import UserCreationForm
@@ -129,10 +128,11 @@ def profile_show(request, id):
 
 
 def categories(request):
-    
-    response = render(request, 'category.html')
+    category = Category.objects.all()
+    context = {'category': category}
+    response = render(request, 'category.html', context)
     return HttpResponse(response)
 
-    
+
 def profile(request):
     return render(request, 'users/profile.html')
