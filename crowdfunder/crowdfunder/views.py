@@ -16,13 +16,16 @@ def root(request):
 
 def project_view(request):
     project = Project.objects.all()
+    categories = Category.objects.all()
     context = {
-        'project': project
+        'project': project,
+        'categories': categories
     }
     response = render(request, 'projectpage.html', context)
     return HttpResponse(response)
 
 def project_create(request):
+    
     if request.method == 'POST':
         form = ProjectForm(request.POST)
         if form.is_valid():

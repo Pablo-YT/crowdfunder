@@ -3,12 +3,11 @@
 <ul>
     <li>
         <h1>{{ project.title }}</h1>
-        <h1>{{ project.owner }}</h1>
-        <h1>{{ project.description }}</h1>
+        <h1>made by {{ project.owner }}</h1>
+        <h1>About: {{ project.description }}</h1>
         <h1>funding goal = {{ project.dollars }}</h1>
         <h2>created on = {{ project.created_at }}</h2>
         <h2>ends on = {{ project.end_at }}</h2>
-        <h1>made by {{ project.user }}</h1>
         <h1>current funds = {{ project.current_funds }}</h1>
     </li>
     <a href="{% url 'delete_project' id=project.pk %}">Delete</a>

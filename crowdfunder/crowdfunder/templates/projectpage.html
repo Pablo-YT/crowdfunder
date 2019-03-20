@@ -1,13 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
-    <ul>
-    {% for projects in project%}
-        <li>
-           <h1><a href="{% url 'project_show' id=projects.pk %}">{{ projects.title }}</a></h1>
-           <h1>{{ projects.name }}</h1>
-           <h1>{{ projects.description }}</h1>
-           <h4>added by {{ projects.user }}</h4>
-        </li>
+<ul>
+    {% for category in categories %}
+    <li><a href="{% url 'category' id=category.pk %}">{{ category.name }}</a></li>
+    <li>{{ category.amount_raised}}</li>
     {% endfor %}
-    </ul>
+</ul>
+<ul>
+{% for projects in project%}
+    <li>
+        <h1><a href="{% url 'project_show' id=projects.pk %}">{{ projects.title }}</a></h1>
+        <h1>{{ projects.name }}</h1>
+        <h1>{{ projects.description }}</h1>
+        <h4>added by {{ projects.user }}</h4>
+    </li>
+{% endfor %}
+</ul>
 {% endblock%}

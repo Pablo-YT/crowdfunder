@@ -23,14 +23,6 @@ class Category(models.Model):
 
 
 class Project(models.Model):
-    CATAGORIES = [
-        ('arts', 'Arts'),
-        ('film', 'Film'),
-        ('games', 'Games'),
-        ('music', 'Music'),
-        ('publishing', 'Publishing'),
-    ]
-    #('Arts', 'Film', 'Games', 'Music', 'Publishing')
     title = models.CharField(max_length=255)
     owner = models.CharField(max_length=255)
     description = models.TextField(max_length=255)
